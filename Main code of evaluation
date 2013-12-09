@@ -1,4 +1,3 @@
-
 %Calculate the F-score (record and precision)
 
 
@@ -11,14 +10,14 @@ L=length(Map)                                %adquire the lenght of the map
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-%fid=fopen('classes.csv')                   %reading of the classifications file
-%FaE= textscan(fid,'%s%s');                 %save it in a table 
-%M_FaE=[FaE{1,1},FaE{1,2}];                 %crate a matrix with the previous table
+fid=fopen('classificadors.txt')                   %reading of the classifications file
+FaE= textscan(fid,'%s%s',' ');                 %save it in a table 
+M_FaE=[FaE{1,1},FaE{1,2}];                 %crate a matrix with the previous table
 
 
 %...................LECTURA FICHERO DE PRUEVA ..................in a matrix
 
-M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
+%M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
 LFV=length(M_FaE);%devuelve la long de las imagenes a evaluar
 
 
@@ -35,7 +34,7 @@ nc1=0; nc2=0; nc3=0; nc4=0; nc5=0; nc6=0; nc7=0; nc8=0; nc9=0;  %negatives_trues
 
 for i=1:LFV                         % pass for all the positions of the clasificators list
  
-    x=M_FaE(i,1);
+    x=M_FaE(i,1)
     
  if(isKey(Map,x))                  % function that returns 1 if  id_imagen(x) is in the map(Map) 
     valueSet=values(Map,x);        % here we adquire the real event of the image to value
@@ -57,7 +56,7 @@ for i=1:LFV                         % pass for all the positions of the clasific
  pc4=pc4+PC;  pf4=pf4+PF;   nf4=nf4+NF; nc4=nc4+NC;
  
  [PC,PF,NF,NC]=matriz_confusion(event1,eventC,'exhibition');
- pc5=pc5+PC;  pf5=pf5+PF;   nf1=nf5+NF; nc5=nc5+NC;
+ pc5=pc5+PC;  pf5=pf5+PF;   nf5=nf5+NF; nc5=nc5+NC;
  
  [PC,PF,NF,NC]=matriz_confusion(event1,eventC,'sports');
  pc6=pc6+PC;  pf6=pf6+PF;   nf6=nf6+NF;  nc6=nc6+NC; 
@@ -124,13 +123,12 @@ val3=[pc3, pf3;
        nc9, nf9];
  tblwrite(val9,COL, FILA , 'non_event.xml') 
  
-pc1=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9;
-pf1=pf1+pf2+pf3+pf4+pf5+pf6+pf7+pf8+pf9;
-nf1=nf1+nf2+nf3+nf4+nf5+nf6+nf7+nf8+nf9;
-nc1=nc1+nc2+nc3+nc4+nc5+nc6+nc7+nc8+nf9;
+pck=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9;
+pfk=pf1+pf2+pf3+pf4+pf5+pf6+pf7+pf8+pf9;
+nfk=nf1+nf2+nf3+nf4+nf5+nf6+nf7+nf8+nf9;
+nck=nc1+nc2+nc3+nc4+nc5+nc6+nc7+nc8+nf9;
 
 [precision,record,F_score]=accuracy (pc1,pf1,nf1) %CALL THE FUNCION WICH RETURNS precision, record and recall valules
- valk=[pc1, pf1;
-       nc1, nf1];
+ valk=[pck, pfk;
+       nck, nfk];
  tblwrite(valk,COL, FILA , 'avaluacion.xml')
- 
