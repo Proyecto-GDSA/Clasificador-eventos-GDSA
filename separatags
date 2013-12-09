@@ -1,3 +1,10 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+%-----------------------------------------------------------------------------------------------%
+
 "separatags" is a function that search the tags with the same Id, and it regroup all of them.
 
 % y --> is a vector of the Id's and tags.
