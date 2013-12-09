@@ -7,24 +7,23 @@
 
 %Calculate the F-score (record and precision)
 
-
 %...............READING OF ANNOTATIONS FILE........... in a containers.Map
 
 fid=fopen('classes.csv');                    %reading of the model file
 DocVT= textscan(fid,'%s%s');                 %save it in a table 
 Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
-L=length(Map)                                %adquire the lenght of the map
+
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-fid=fopen('classificadors.txt')                   %reading of the classifications file
-FaE= textscan(fid,'%s%s',' ');                 %save it in a table 
-M_FaE=[FaE{1,1},FaE{1,2}];                 %crate a matrix with the previous table
+%fid=fopen('classificadors.txt')                   %reading of the classifications file
+%FaE= textscan(fid,'%s%s',' ');                        %save it in a table 
+%M_FaE=[FaE{1,1},FaE{1,2}];                        %crate a matrix with the previous table
 
 
 %...................LECTURA FICHERO DE PRUEVA ..................in a matrix
 
-%M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
+M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
 LFV=length(M_FaE);%devuelve la long de las imagenes a evaluar
 
 
@@ -41,7 +40,7 @@ nc1=0; nc2=0; nc3=0; nc4=0; nc5=0; nc6=0; nc7=0; nc8=0; nc9=0;  %negatives_trues
 
 for i=1:LFV                         % pass for all the positions of the clasificators list
  
-    x=M_FaE(i,1)
+    x=M_FaE(i,1);
     
  if(isKey(Map,x))                  % function that returns 1 if  id_imagen(x) is in the map(Map) 
     valueSet=values(Map,x);        % here we adquire the real event of the image to value
@@ -93,42 +92,42 @@ end
        nc1, nf1];
  COL={'POSITIVOS'; 'NEGATIVOS'};
  FILA={'POSITIVO','NEGATIVOS'};
- tblwrite(val1,COL, FILA , 'concert.xml')
+ tblwrite(val1,COL, FILA , 'concert.txt')
 
   val2=[pc2, pf2;
        nc2, nf2];
- tblwrite(val2,COL, FILA , 'theatre_dance.xml')
+ tblwrite(val2,COL, FILA , 'theatre_dance.txt')
  
  
 val3=[pc3, pf3;
        nc3, nf3];
- tblwrite(val3,COL, FILA , 'fashion.xml')
+ tblwrite(val3,COL, FILA , 'fashion.txt')
  
  val4=[pc4, pf4;
        nc4, nf4];
- tblwrite(val4,COL, FILA , 'protest.xml')
+ tblwrite(val4,COL, FILA , 'protest.txt')
 
  val5=[pc5, pf5;
        nc5, nf5];
- tblwrite(val5,COL, FILA , 'exhibition.xml')
+ tblwrite(val5,COL, FILA , 'exhibition.txt')
 
  
  val6=[pc6, pf6;
        nc6, nf6];
- tblwrite(val6,COL, FILA , 'sports.xml')      
+ tblwrite(val6,COL, FILA , 'sports.txt')      
 
  
  val7=[pc7, pf7;
        nc7, nf7];
- tblwrite(val7,COL, FILA , 'conference.xml') 
+ tblwrite(val7,COL, FILA , 'conference.txt') 
  
  val8=[pc8, pf8;
        nc8, nf8];
- tblwrite(val8,COL, FILA , 'others.xml') 
+ tblwrite(val8,COL, FILA , 'others.txt') 
  
  val9=[pc9, pf9;
        nc9, nf9];
- tblwrite(val9,COL, FILA , 'non_event.xml') 
+ tblwrite(val9,COL, FILA , 'non_event.txt') 
  
 pck=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9;
 pfk=pf1+pf2+pf3+pf4+pf5+pf6+pf7+pf8+pf9;
@@ -138,4 +137,11 @@ nck=nc1+nc2+nc3+nc4+nc5+nc6+nc7+nc8+nf9;
 [precision,record,F_score]=accuracy (pc1,pf1,nf1) %CALL THE FUNCION WICH RETURNS precision, record and recall valules
  valk=[pck, pfk;
        nck, nfk];
- tblwrite(valk,COL, FILA , 'avaluacion.xml')
+ tblwrite(valk,COL, FILA , 'm_avaluacion.txt')
+ 
+ 
+ COL={'Precision'; 'Record'; 'F-score'};
+ FILA={'valores'};
+ val_fin=[precision, record , F_score];
+ tblwrite(val_fin,COL, FILA , 'F-score.txt')
+ 
