@@ -1,3 +1,10 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+%-----------------------------------------------------------------------------------------------%
+
 load tags-for-event.mat
 load metadatosfotos2.mat
 tags3=tags2(n,:);
