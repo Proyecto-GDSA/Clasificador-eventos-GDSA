@@ -1,3 +1,10 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+
+%%
 %This function take all Id's of the table "x" that have the same "nomclase" that we search.
 % x --> is the Id and its class.
 % nomclase --> is the class that we search.
