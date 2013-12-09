@@ -1,3 +1,10 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+%-----------------------------------------------------------------------------------------------%
+
 "selecciona1" is the function that search the Id's ended in a determinate number "n".
 
 % v --> is a table that contains a list of Id's and tags.
