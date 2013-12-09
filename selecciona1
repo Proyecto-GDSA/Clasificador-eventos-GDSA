@@ -1,0 +1,28 @@
+"selecciona1" is the function that search the Id's ended in a determinate number "n".
+
+% v --> is a table that contains a list of Id's and tags.
+% n --> is the number that we want at the end of Id's.
+
+%______________________________________________________________________________________%
+
+
+function salida=selecciona1(v,n)
+
+L=length(v);
+f=1;
+
+for i=2:L-1
+    S=v(i,1);
+    S=char(S);
+    N=length(S);
+    if strcmp(n, S(N));
+        
+       if f==1
+           f=2;
+           salida=v(i,:);
+       else
+           salida=[salida;v(i,:)];
+       end
+    end
+end
+end
