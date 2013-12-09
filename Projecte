@@ -1,0 +1,135 @@
+%SOCIAL EVENT DETECTION
+%
+%This program attempts to detect what type of social event appears in an 
+%image. To do this, we gonna do a training from all the tags of the 
+%images, which have metadata.
+
+%Then, from training and metadata of photos to try to 
+%determine what sort event belong.
+
+
+
+%----------------------------- PROGRAM-----------------------------------
+
+
+%extract Id-Classes from a csv file
+fid=fopen('clases.csv');
+x=textscan(fid,'%s%s');
+%%
+%extract Id-Tag from a csv file
+fid=fopen('metadades1.csv');
+y=textscan(fid,'%s%s');
+fclose(fid);
+
+%%
+
+
+clases=[x{1,1}, x{1,2}];%we take properly the information from the csv
+info=[y{1,1},y{1,2}];
+
+%we select only the information from photographies of group 1 and we save
+%in 2 variables
+salidatags=selecciona1(info,'1');
+save metadatosfotos1.mat salidatags
+salidaclases=selecciona1(clases,'1');
+save clasesfotos1.mat salidaclases
+
+%%
+% we load the variables ( if we like we can continue from this point if we
+% have this information)
+load metadatosfotos1.mat
+load clasesfotos1.mat
+
+% In this part we try to extract all the tags that belongs at the same ID
+tags=separatags(salidatags);
+events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
+
+% Now we try to extract all the Id that belongs at the same event
+idconcert=Idclase(salidaclases,events(1));
+idconference=Idclase(salidaclases,events(2));
+idexhibition=Idclase(salidaclases,events(3));
+idfashion=Idclase(salidaclases,events(4));
+idother=Idclase(salidaclases,events(5));
+idprotest=Idclase(salidaclases,events(6));
+idtdance=Idclase(salidaclases,events(7));
+idnoevent=Idclase(salidaclases,events(8));
+
+save tags.mat tags
+
+%%
+%Training
+% for conclude the part of descriptors, we create one vector by event with
+% all his tags.
+tagsconcert= separaclases(idconcert,tags,events(1));
+tagsconference= separaclases(idconference,tags,events(2));
+tagexihibition= separaclases(idexhibition,tags,events(3));
+tagsfashion= separaclases(idfashion,tags,events(4));
+tagsother= separaclases(idother,tags,events(5));
+tagsprotest= separaclases(idprotest,tags,events(6));
+tagsdance= separaclases(idtdance,tags,events(7));
+tagsnoevent= separaclases(idnoevent,tags,events(8));
+%%
+save tags-for-event.mat tagsconcert tagsconference tagexihibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
+
+% we extract the ID from the tags of the photografies of the group 2
+info=[y{1,1},y{1,2}];
+salidatags2=selecciona1(info,'2');
+tags2=separatags(salidatags2);
+save metadatosfotos2.mat tags2
+
+
+
+
+%%
+%Classificadores
+%we clear all the variables for see all program more easy
+clear all
+load tags-for-event.mat
+load metadatosfotos2.mat
+
+
+
+%%
+
+tags3=tags2;
+Lt=length(tags3);
+k=1;
+
+%In this part we use a loop to cycle through the entire table and ID tags 
+%and save the image to your associar course event
+for k=1:Lt
+    tag=tags3{k,2};
+    id=tags3(k,1);
+
+ %At this point, we seek matches between image tags and events and we extract the number of matches
+v=buscarcoin(tag,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+
+L=length(v);
+max=0;
+
+%after we try find the maximum value of the vector and his position in the vector ( we can't use the
+% function MAX() because it breaks with our vector)
+for i=1:L
+    if max < v(i)
+        pos=i;
+        max=v(i);
+    end
+end
+
+%Finally with the position we can determine the event of the photography
+    if k==1
+        salida=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        k=2;
+    else
+        clase=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        salida=[salida;clase];
+    end
+end
+%%
+%In this part we save the new table in a document txt
+fid = fopen('classificadors.txt','w');
+for row = 1:size(salida,1)
+    fprintf(fid, repmat('%s\b',1,size(salida,2)-1), salida{row,1:end-1});
+    fprintf(fid, '%s\n', salida{row,end});
+end
+fclose(fid);
