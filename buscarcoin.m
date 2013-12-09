@@ -1,3 +1,9 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+%-----------------------------------------------------------------------------------------------%
 
 function solucio=buscarcoin(imag1,c1,c2,c3,c4,c5,c6,c7,c8)
     L=length(imag1);
