@@ -118,10 +118,10 @@ end
 
 %Finally with the position we can determine the event of the photography
     if k==1
-        salida=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        salida=relacio(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
         k=2;
     else
-        clase=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        clase=relacio(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
         salida=[salida;clase];
     end
 end
