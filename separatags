@@ -5,7 +5,7 @@
 
 %-----------------------------------------------------------------------------------------------%
 
-"separatags" is a function that search the tags with the same Id, and it regroup all of them.
+%"separatags" is a function that search the tags with the same Id, and it regroup all of them.
 
 % y --> is a vector of the Id's and tags.
 %_______________________________________________________________________________________________________%
