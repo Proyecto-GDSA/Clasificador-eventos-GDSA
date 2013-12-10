@@ -5,12 +5,12 @@
 
 %-----------------------------------------------------------------------------------------------%
 
-"selecciona1" is the function that search the Id's ended in a determinate number "n".
+%"selecciona1" is the function that search the Id's ended in a determinate number "n".
 
 % v --> is a table that contains a list of Id's and tags.
 % n --> is the number that we want at the end of Id's.
 
-%____________________________________________________________________________________________________________%
+%__________________________________________________________________________________________________________%
 
 
 function salida=selecciona1(v,n)
