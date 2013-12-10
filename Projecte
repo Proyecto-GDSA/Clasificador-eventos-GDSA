@@ -73,8 +73,8 @@ save tags-for-event.mat tagsconcert tagsconference tagexihibition tagsfashion ta
 
 % we extract the ID from the tags of the photografies of the group 2
 info=[y{1,1},y{1,2}];
-salidatags2=selecciona1(info,'2');
-tags2=separatags(salidatags2);
+salidatags=selecciona2num(info,'22');
+tags2=separatags(salidatags);
 save metadatosfotos2.mat tags2
 
 
