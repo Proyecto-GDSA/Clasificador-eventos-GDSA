@@ -3,11 +3,11 @@
 %Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
 % full description of the license is in the file LISENCE.TXT
 
+%%
 %This function finds the matches between the tags of the new image with the tags of each classe
-% - imag1: is the set of tags of the new image
-% - c1, c2, c3, c4, c5, c6, c7, c8: are sets of tags for each image
-
-%-----------------------------------------------------------------------------------------------%
+% imag1--> is the set of tags of the new image
+% c1, c2, c3, c4, c5, c6, c7, c8 --> are sets of tags for each image
+%________________________________________________________________________________________________________________%
 
 function solucio=buscarcoin(imag1,c1,c2,c3,c4,c5,c6,c7,c8)
     L=length(imag1);
