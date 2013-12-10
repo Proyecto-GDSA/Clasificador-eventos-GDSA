@@ -27,10 +27,10 @@ for i=1:L
     end
 end
     if k==1
-        salida=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        salida=relacio(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
         k=2;
     else
-        clase=relacion(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
+        clase=relacio(pos,id,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
         salida=[salida;clase];
     end
 end
