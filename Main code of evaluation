@@ -7,6 +7,9 @@
 
 %Calculate the F-score (record and precision)
 
+
+
+
 %...............READING OF ANNOTATIONS FILE........... in a containers.Map
 
 fid=fopen('classes.csv');                    %reading of the model file
@@ -16,15 +19,10 @@ Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-%fid=fopen('classificadors.txt')                   %reading of the classifications file
-%FaE= textscan(fid,'%s%s',' ');                        %save it in a table 
-%M_FaE=[FaE{1,1},FaE{1,2}];                        %crate a matrix with the previous table
-
-
-%...................LECTURA FICHERO DE PRUEVA ..................in a matrix
-
-M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
-LFV=length(M_FaE);%devuelve la long de las imagenes a evaluar
+fid=fopen('classificadors.txt')                   %reading of the classifications file
+FaE= textscan(fid,'%s%s',' ');                    %save it in a table 
+M_FaE=[FaE{1,1},FaE{1,2}];                        %crate a matrix with the previous table
+LFV=length(M_FaE);                                %length of classifiers matrix
 
 
 
@@ -143,5 +141,6 @@ nck=nc1+nc2+nc3+nc4+nc5+nc6+nc7+nc8+nf9;
  COL={'Precision'; 'Record'; 'F-score'};
  FILA={'valores'};
  val_fin=[precision, record , F_score];
- tblwrite(val_fin,COL, FILA , 'F-score.txt')
+ tblwrite(val_fin,COL, FILA , 'F-score.txt') %EXPOSE IN A TABLE THE EVALUATION RESULTS
+ 
  
