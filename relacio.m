@@ -8,8 +8,8 @@
 
 %This function relates the id of the new image with the corresponding class
 % pos --> is the position that relates the new image with the class that matches more
-% tags --> 
-% c1, c2, c3, c4, c5, c6, c7, c8 --> are sets of tags 
+% tags --> is the set of tags with the corresponding ID
+% c1, c2, c3, c4, c5, c6, c7, c8 --> are sets of tags foreach image
 
 %__________________________________________________________________________________________________________________%
 
