@@ -1,0 +1,10 @@
+%this function create a map from a vector of tags
+
+function M=creamaps(vector)
+
+L=length(vector);
+tags2=unique(vector(2:L));
+L=length(tags2);
+h=zeros(1,L);
+M=containers.Map(tags2,h);
+end
