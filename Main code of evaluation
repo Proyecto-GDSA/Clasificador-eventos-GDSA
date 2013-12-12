@@ -9,20 +9,31 @@
 
 
 
-
 %...............READING OF ANNOTATIONS FILE........... in a containers.Map
 
 fid=fopen('classes.csv');                    %reading of the model file
 DocVT= textscan(fid,'%s%s');                 %save it in a table 
-Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
 
+classes=[DocVT{1,1},DocVT{1,2}];
+
+salida=selecciona2num(classes,'33');
+%salida=selecciona1(classes,'2');
+
+Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
+K=unique(salida(:,2));
+k=length(K);
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-fid=fopen('classificadors.txt')                   %reading of the classifications file
-FaE= textscan(fid,'%s%s',' ');                    %save it in a table 
-M_FaE=[FaE{1,1},FaE{1,2}];                        %crate a matrix with the previous table
-LFV=length(M_FaE);                                %length of classifiers matrix
+fid=fopen('22.txt')                   %reading of the classifications file
+FaE= textscan(fid,'%s%s',' ');         %save it in a table 
+M_FaE=[FaE{1,1},FaE{1,2}];             %crate a matrix with the previous table
+
+
+%...................LECTURA FICHERO DE PRUEVA ..................in a matrix
+
+%M_FaE=salidaclases; %igualacion de matriz obtenida con load(PRUEVAS)
+LFV=length(M_FaE);%devuelve la long de las imagenes a evaluar
 
 
 
@@ -92,55 +103,52 @@ end
  FILA={'POSITIVO','NEGATIVOS'};
  tblwrite(val1,COL, FILA , 'concert.txt')
 
+ [precision1,record1,F_score1]=accuracy (pc1,pf1,nf1);
+ 
   val2=[pc2, pf2;
        nc2, nf2];
  tblwrite(val2,COL, FILA , 'theatre_dance.txt')
+[precision2,record2,F_score2]=accuracy (pc2,pf2,nf2);
  
  
-val3=[pc3, pf3;
+ val3=[pc3, pf3;
        nc3, nf3];
  tblwrite(val3,COL, FILA , 'fashion.txt')
- 
+[precision3,record3,F_score3]=accuracy (pc3,pf3,nf3);
+
+
  val4=[pc4, pf4;
        nc4, nf4];
  tblwrite(val4,COL, FILA , 'protest.txt')
+ [precision4,record4,F_score4]=accuracy (pc4,pf4,nf4);
 
  val5=[pc5, pf5;
        nc5, nf5];
  tblwrite(val5,COL, FILA , 'exhibition.txt')
-
+[precision5,record5,F_score5]=accuracy (pc5,pf5,nf5);
  
  val6=[pc6, pf6;
        nc6, nf6];
  tblwrite(val6,COL, FILA , 'sports.txt')      
-
+[precision6,record6,F_score6]=accuracy (pc6,pf6,nf6);
  
  val7=[pc7, pf7;
        nc7, nf7];
  tblwrite(val7,COL, FILA , 'conference.txt') 
+ [precision7,record7,F_score7]=accuracy (pc7,pf7,nf7);
  
  val8=[pc8, pf8;
        nc8, nf8];
  tblwrite(val8,COL, FILA , 'others.txt') 
+ [precision8,record8,F_score8]=accuracy (pc8,pf8,nf8);
+ 
  
  val9=[pc9, pf9;
        nc9, nf9];
  tblwrite(val9,COL, FILA , 'non_event.txt') 
- 
-pck=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9;
-pfk=pf1+pf2+pf3+pf4+pf5+pf6+pf7+pf8+pf9;
-nfk=nf1+nf2+nf3+nf4+nf5+nf6+nf7+nf8+nf9;
-nck=nc1+nc2+nc3+nc4+nc5+nc6+nc7+nc8+nf9;
-
-[precision,record,F_score]=accuracy (pc1,pf1,nf1) %CALL THE FUNCION WICH RETURNS precision, record and recall valules
- valk=[pck, pfk;
-       nck, nfk];
- tblwrite(valk,COL, FILA , 'm_avaluacion.txt')
+ [precision9,record9,F_score9]=accuracy (pc9,pf9,nf9);
  
  
- COL={'Precision'; 'Record'; 'F-score'};
- FILA={'valores'};
- val_fin=[precision, record , F_score];
- tblwrite(val_fin,COL, FILA , 'F-score.txt') %EXPOSE IN A TABLE THE EVALUATION RESULTS
- 
- 
+ pre=(precision1+precision2+precision3+precision4+precision5+precision6+precision7+precision8+precision9)/k
+ rec=(record1+record2+record3+record4+record5+record6+record7+record8+record9)/k
+ Fsco =(F_score1+F_score2+F_score3+F_score4+F_score5+F_score6+F_score7+F_score8+F_score9)/k
