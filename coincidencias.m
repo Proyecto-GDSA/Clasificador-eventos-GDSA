@@ -1,3 +1,10 @@
+%The MIT License (MIT)
+
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+% full description of the license is in the file LISENCE.TXT
+
+%----------------------------------------------------------------------------------------------------------------%
+
 
 
 function num=coincidencias(map, tags)
