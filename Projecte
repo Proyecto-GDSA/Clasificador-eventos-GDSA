@@ -117,8 +117,7 @@ for k=1:Lt
     id=tags3(k,1);
 
  %At this point, we seek matches between image tags and events and we extract the number of matches
-v=buscarcoin(tag,tagexihibition,tagsconcert, tagsconference, tagsdance, tagsfashion, tagsnoevent, tagsother, tagsprotest);
-
+v=buscarcoin(tag,tagsconcert, tagsconference,tagexihibition,  tagsfashion, tagsother, tagsprotest,tagsdance,tagsnoevent);
 L=length(v);
 max=0;
 
