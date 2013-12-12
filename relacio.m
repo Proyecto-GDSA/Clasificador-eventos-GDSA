@@ -1,6 +1,6 @@
 %The MIT License (MIT)
 
-%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Ronldán, Mireia González, Helena Rodriguez
+%Copyright (c) 2013 Proyecto-GDSA Realized by: Adrià González, Nayara Roldán, Mireia González, Helena Rodriguez
 % full description of the license is in the file LISENCE.TXT
 
 %----------------------------------------------------------------------------------------------------------------%
@@ -14,23 +14,23 @@
 %__________________________________________________________________________________________________________________%
 
 
-function clase=relacio(pos,tags,c1,c2,c3,c4,c5,c6,c7,c8)
+function clase=relacio(pos,tags,events)
 switch pos
     case 1
-        clase=[tags, c1(1)];
+        clase=[tags, events(1)];
     case 2
-        clase=[tags, c2(1)];
+        clase=[tags, events(2)];
     case 3
-        clase=[tags, c3(1)];
+        clase=[tags, events(3)];
     case 4
-         clase=[tags, c4(1)];
+         clase=[tags, events(4)];
     case 5
-         clase=[tags, c5(1)];
+         clase=[tags, events(5)];
     case 6
-         clase=[tags, c6(1)];
+         clase=[tags, events(6)];
     case 7
-         clase=[tags, c7(1)];
+         clase=[tags, events(7)];
     case 8
-         clase=[tags, c8(1)];
+         clase=[tags, events(8)];
 end
 end
