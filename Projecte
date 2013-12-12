@@ -133,10 +133,10 @@ end
 
 %Finally with the position we can determine the event of the photography
     if k==1
-        salida=relacio(pos,id,event);
+        salida=relacio(pos,id,events);
         k=2;
     else
-        clase=relacio(pos,id,event);
+        clase=relacio(pos,id,events);
         salida=[salida;clase];
     end
 end
