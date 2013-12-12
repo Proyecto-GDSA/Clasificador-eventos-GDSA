@@ -1,11 +1,11 @@
 %SOCIAL EVENT DETECTION
-
+%
 %This program attempts to detect what type of social event appears in an 
-%image. To do this, we are going to do a training from all the tags of the 
+%image. To do this, we gonna do a training from all the tags of the 
 %images, which have metadata.
 
-%Then, from training and metadata of photos we will try to 
-%determine what type of event is.
+%Then, from training and metadata of photos to try to 
+%determine what sort event belong.
 
 
 
@@ -35,17 +35,16 @@ salidaclases=selecciona1(clases,'1');
 save clasesfotos1.mat salidaclases
 
 %%
-% we load the variables  ( if we like we can start from this point if we
+% we load the variables ( if we like we can continue from this point if we
 % have this information)
-
 load metadatosfotos1.mat
 load clasesfotos1.mat
 
-% In this part we extract all the tags that belongs at the same ID
+% In this part we try to extract all the tags that belongs at the same ID
 tags=separatags(salidatags);
 events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
 
-% Now we obtain all the Id that belongs at the same event
+% Now we try to extract all the Id that belongs at the same event
 idconcert=Idclase(salidaclases,events(1));
 idconference=Idclase(salidaclases,events(2));
 idexhibition=Idclase(salidaclases,events(3));
@@ -59,7 +58,7 @@ save tags.mat tags
 
 %%
 %Training
-% To conclude the descriptors part , we are going to create one vector by event with
+% for conclude the part of descriptors, we create one vector by event with
 % all his tags.
 tagsconcert= separaclases(idconcert,tags,events(1));
 tagsconference= separaclases(idconference,tags,events(2));
@@ -69,14 +68,29 @@ tagsother= separaclases(idother,tags,events(5));
 tagsprotest= separaclases(idprotest,tags,events(6));
 tagsdance= separaclases(idtdance,tags,events(7));
 tagsnoevent= separaclases(idnoevent,tags,events(8));
-%%
-save tags-for-event.mat tagsconcert tagsconference tagexihibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
 
+
+save tags-for-event.mat tagsconcert tagsconference tagexihibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
+%%
+load tags-for-event.mat
+Mapcocnert=creamaps(tagsconcert);
+Mapconference=creamaps(tagsconference);
+Mapexihibition=creamaps(tagexihibition);
+Mapfashion=creamaps(tagsfashion);
+Mapcother=creamaps(tagsother);
+Maprotest=creamaps(tagsprotest);
+Mapdance=creamaps(tagsdance);
+Mapnoevent=creamaps(tagsnoevent);
+
+
+save maps-event.m Mapcocnert Mapconference Mapexihibition Mapfashion Mapcother Maprotest Mapdance Mapnoevent
+%%
 % we extract the ID from the tags of the photografies of the group 2
 info=[y{1,1},y{1,2}];
 salidatags=selecciona2num(info,'22');
 tags2=separatags(salidatags);
 save metadatosfotos2.mat tags2
+
 
 
 
