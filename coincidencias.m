@@ -12,7 +12,8 @@ L=length(tags);
 cont=0;
 for i=1:L
     if isKey(map, tags(i))
-        cont=cont+1;
+    x=tags{i};
+          cont=cont+map(x);
     end
 end 
 num=cont;
