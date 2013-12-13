@@ -12,7 +12,7 @@
 %----------------------------- PROGRAM-----------------------------------
 
 
-%extract Id-Classes from a csv file
+% extract Id-Classes from a csv file
 fid=fopen('clases.csv');
 x=textscan(fid,'%s%s');
 %%
@@ -27,11 +27,11 @@ fclose(fid);
 clases=[x{1,1}, x{1,2}];%we take properly the information from the csv
 info=[y{1,1},y{1,2}];
 
-%we select only the information from photographies of group 1 and we save
-%in 2 variables
-salidatags=selecciona1(info,'1');
+% we select only the information from photographies of group 1 and we save
+% in 2 variables
+salidatags=selecciona1(info,'2');
 save metadatosfotos1.mat salidatags
-salidaclases=selecciona1(clases,'1');
+salidaclases=selecciona1(clases,'2');
 save clasesfotos1.mat salidaclases
 
 %%
@@ -41,7 +41,7 @@ load metadatosfotos1.mat
 load clasesfotos1.mat
 
 % In this part we try to extract all the tags that belongs at the same ID
-tags=separatags(salidatags);
+ tags=separatags(salidatags);
 events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
 
 % Now we try to extract all the Id that belongs at the same event
@@ -58,39 +58,74 @@ save tags.mat tags
 
 %%
 %Training
-% for conclude the part of descriptors, we create one vector by event with
-% all his tags.
+%for conclude the part of descriptors, we create one vector by event with
+%all his tags.
 tagsconcert= separaclases(idconcert,tags,events(1));
 tagsconference= separaclases(idconference,tags,events(2));
-tagexihibition= separaclases(idexhibition,tags,events(3));
+tagexhibition= separaclases(idexhibition,tags,events(3));
 tagsfashion= separaclases(idfashion,tags,events(4));
 tagsother= separaclases(idother,tags,events(5));
 tagsprotest= separaclases(idprotest,tags,events(6));
 tagsdance= separaclases(idtdance,tags,events(7));
 tagsnoevent= separaclases(idnoevent,tags,events(8));
+%
+save tags-for-event.mat tagsconcert tagsconference tagexhibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
 
-
-save tags-for-event.mat tagsconcert tagsconference tagexihibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
 %%
+%
+clear all
 load tags-for-event.mat
-Mapcocnert=creamaps(tagsconcert);
+
+L=length(tagsconcert);
+tagsconcert=unique(tagsconcert(2:L));
+L=length(tagsconference);
+tagsconference=unique(tagsconference(2:L));
+L=length(tagexhibition);
+tagexhibition=unique(tagexhibition(2:L));
+L=length(tagsfashion);
+tagsfashion=unique(tagsfashion(2:L));
+L=length(tagsother);
+tagsother=unique(tagsother(2:L));
+L=length(tagsprotest);
+tagsprotest=unique(tagsprotest(2:L));
+L=length(tagsnoevent);
+tagsnoevent=unique(tagsnoevent(2:L));
+
+Mapconcert=creamaps(tagsconcert);
 Mapconference=creamaps(tagsconference);
-Mapexihibition=creamaps(tagexihibition);
+Mapexhibition=creamaps(tagexhibition);
 Mapfashion=creamaps(tagsfashion);
-Mapcother=creamaps(tagsother);
+Mapother=creamaps(tagsother);
 Maprotest=creamaps(tagsprotest);
 Mapdance=creamaps(tagsdance);
 Mapnoevent=creamaps(tagsnoevent);
 
+vconcert=ponderacio(tagsconcert,Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
+vconference=ponderacio(tagsconference,Mapconcert, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
+vexhibition=ponderacio(tagexhibition,Mapconcert, Mapconference, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
+vfashion=ponderacio(tagsfashion,Mapconcert, Mapconference, Mapexhibition, Mapother, Maprotest, Mapdance, Mapnoevent);
+vother=ponderacio(tagsother,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Maprotest, Mapdance, Mapnoevent);
+vprotest=ponderacio(tagsprotest,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Mapdance, Mapnoevent);
+vdance=ponderacio(tagsdance,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapnoevent);
+vnoevent=ponderacio(tagsnoevent,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance);
+%%
+Mapconcert=containers.Map(tagsconcert,vconcert);
+Mapconference=containers.Map(tagsconference,vconference);
+Mapexhibition=containers.Map(tagexhibition,vexhibition);
+Mapfashion=containers.Map(tagsfashion,vfashion);
+Mapother=containers.Map(tagsother,vother);
+Maprotest=containers.Map(tagsprotest,vprotest);
+Mapdance=containers.Map(tagsdance,vdance);
+Mapnoevent=containers.Map(tagsnoevent,vnoevent);
 
-save maps-event.m Mapcocnert Mapconference Mapexihibition Mapfashion Mapcother Maprotest Mapdance Mapnoevent
+
+save maps-event.mat Mapconcert Mapconference Mapexhibition Mapfashion Mapother Maprotest Mapdance Mapnoevent
 %%
 % we extract the ID from the tags of the photografies of the group 2
 info=[y{1,1},y{1,2}];
-salidatags=selecciona2num(info,'22');
+salidatags=selecciona1(info,'1');
 tags2=separatags(salidatags);
 save metadatosfotos2.mat tags2
-
 
 
 
@@ -99,13 +134,13 @@ save metadatosfotos2.mat tags2
 %Classificadores
 %we clear all the variables for see all program more easy
 clear all
-load tags-for-event.mat
+load maps-event.mat
 load metadatosfotos2.mat
 
 
 
 %%
-
+events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
 tags3=tags2;
 Lt=length(tags3);
 k=1;
@@ -117,7 +152,8 @@ for k=1:Lt
     id=tags3(k,1);
 
  %At this point, we seek matches between image tags and events and we extract the number of matches
-v=buscarcoin(tag,tagsconcert, tagsconference,tagexihibition,  tagsfashion, tagsother, tagsprotest,tagsdance,tagsnoevent);
+v=buscarcoin(tag, Mapconcert, Mapconference,Mapexhibition,  Mapfashion, Mapother, Maprotest,Mapdance,Mapnoevent);
+
 L=length(v);
 max=0;
 
@@ -130,16 +166,19 @@ for i=1:L
     end
 end
 
+
 %Finally with the position we can determine the event of the photography
     if k==1
-        salida=relacio(pos,id,events);
+        salida=relacion(pos,id,events);
         k=2;
     else
-        clase=relacio(pos,id,events);
+        clase=relacion(pos,id,events);
         salida=[salida;clase];
     end
 end
 %%
+
+
 %In this part we save the new table in a document txt
 fid = fopen('classificadors.txt','w');
 for row = 1:size(salida,1)
@@ -147,3 +186,12 @@ for row = 1:size(salida,1)
     fprintf(fid, '%s\n', salida{row,end});
 end
 fclose(fid);
+
+
+
+%           
+%             
+            
+            
+            
+            
