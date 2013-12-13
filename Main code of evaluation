@@ -5,8 +5,8 @@
 
 %-----------------------------------------------------------------------------------------------%
 
-%Calculate the F-score (record and precision)
 
+%Calculate the F-score (record and precision) and Accuracy parameters
 
 
 %...............READING OF ANNOTATIONS FILE........... in a containers.Map
@@ -16,8 +16,8 @@ DocVT= textscan(fid,'%s%s');                 %save it in a table
 
 classes=[DocVT{1,1},DocVT{1,2}];
 
-salida=selecciona2num(classes,'33');
-%salida=selecciona1(classes,'2');
+%salida=selecciona2num(classes,'33');
+salida=selecciona1(classes,'1');
 
 Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
 K=unique(salida(:,2));
@@ -25,7 +25,7 @@ k=length(K);
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-fid=fopen('22.txt')                   %reading of the classifications file
+fid=fopen('2.2.2.txt')                   %reading of the classifications file
 FaE= textscan(fid,'%s%s',' ');         %save it in a table 
 M_FaE=[FaE{1,1},FaE{1,2}];             %crate a matrix with the previous table
 
@@ -103,52 +103,53 @@ end
  FILA={'POSITIVO','NEGATIVOS'};
  tblwrite(val1,COL, FILA , 'concert.txt')
 
- [precision1,record1,F_score1]=accuracy (pc1,pf1,nf1);
+ [precision1,record1,F_score1]=parameters_evaluation(pc1,pf1,nf1);
  
   val2=[pc2, pf2;
        nc2, nf2];
  tblwrite(val2,COL, FILA , 'theatre_dance.txt')
-[precision2,record2,F_score2]=accuracy (pc2,pf2,nf2);
+[precision2,record2,F_score2]=parameters_evaluation(pc2,pf2,nf2);
  
  
  val3=[pc3, pf3;
        nc3, nf3];
  tblwrite(val3,COL, FILA , 'fashion.txt')
-[precision3,record3,F_score3]=accuracy (pc3,pf3,nf3);
+[precision3,record3,F_score3]=parameters_evaluation (pc3,pf3,nf3);
 
 
  val4=[pc4, pf4;
        nc4, nf4];
  tblwrite(val4,COL, FILA , 'protest.txt')
- [precision4,record4,F_score4]=accuracy (pc4,pf4,nf4);
+ [precision4,record4,F_score4]=parameters_evaluation (pc4,pf4,nf4);
 
  val5=[pc5, pf5;
        nc5, nf5];
  tblwrite(val5,COL, FILA , 'exhibition.txt')
-[precision5,record5,F_score5]=accuracy (pc5,pf5,nf5);
+[precision5,record5,F_score5]=parameters_evaluation (pc5,pf5,nf5);
  
  val6=[pc6, pf6;
        nc6, nf6];
  tblwrite(val6,COL, FILA , 'sports.txt')      
-[precision6,record6,F_score6]=accuracy (pc6,pf6,nf6);
+[precision6,record6,F_score6]=parameters_evaluation (pc6,pf6,nf6);
  
  val7=[pc7, pf7;
        nc7, nf7];
  tblwrite(val7,COL, FILA , 'conference.txt') 
- [precision7,record7,F_score7]=accuracy (pc7,pf7,nf7);
+ [precision7,record7,F_score7]=parameters_evaluation (pc7,pf7,nf7);
  
  val8=[pc8, pf8;
        nc8, nf8];
  tblwrite(val8,COL, FILA , 'others.txt') 
- [precision8,record8,F_score8]=accuracy (pc8,pf8,nf8);
+ [precision8,record8,F_score8]=parameters_evaluation (pc8,pf8,nf8);
  
  
  val9=[pc9, pf9;
        nc9, nf9];
  tblwrite(val9,COL, FILA , 'non_event.txt') 
- [precision9,record9,F_score9]=accuracy (pc9,pf9,nf9);
+ [precision9,record9,F_score9]=parameters_evaluation (pc9,pf9,nf9);
+ pppc=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9
+ accuracy= ((pppc)/LFV)*100
+ precision=(precision1+precision2+precision3+precision4+precision5+precision6+precision7+precision8+precision9)/k
+ record=(record1+record2+record3+record4+record5+record6+record7+record8+record9)/k
+ Fscore =(F_score1+F_score2+F_score3+F_score4+F_score5+F_score6+F_score7+F_score8+F_score9)/k
  
- 
- pre=(precision1+precision2+precision3+precision4+precision5+precision6+precision7+precision8+precision9)/k
- rec=(record1+record2+record3+record4+record5+record6+record7+record8+record9)/k
- Fsco =(F_score1+F_score2+F_score3+F_score4+F_score5+F_score6+F_score7+F_score8+F_score9)/k
