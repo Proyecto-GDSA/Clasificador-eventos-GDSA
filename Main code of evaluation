@@ -16,8 +16,8 @@ DocVT= textscan(fid,'%s%s');                 %save it in a table
 
 classes=[DocVT{1,1},DocVT{1,2}];
 
-%salida=selecciona2num(classes,'33');
-salida=selecciona1(classes,'1');
+%salida=selecciona2num(classes,'33');        %it is used to know the part of ground truth that is going to be used
+%salida=selecciona1(classes,'1');            % it depends on the part of the the images colection classified
 
 Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
 K=unique(salida(:,2));
@@ -25,7 +25,7 @@ k=length(K);
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-fid=fopen('2.2.2.txt')                   %reading of the classifications file
+fid=fopen('22.txt');                  %reading of the classifications file
 FaE= textscan(fid,'%s%s',' ');         %save it in a table 
 M_FaE=[FaE{1,1},FaE{1,2}];             %crate a matrix with the previous table
 
@@ -147,7 +147,8 @@ end
        nc9, nf9];
  tblwrite(val9,COL, FILA , 'non_event.txt') 
  [precision9,record9,F_score9]=parameters_evaluation (pc9,pf9,nf9);
- pppc=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9
+ 
+ pppc=pc1+pc2+pc3+pc4+pc5+pc6+pc7+pc8+pc9;
  accuracy= ((pppc)/LFV)*100
  precision=(precision1+precision2+precision3+precision4+precision5+precision6+precision7+precision8+precision9)/k
  record=(record1+record2+record3+record4+record5+record6+record7+record8+record9)/k
