@@ -156,6 +156,7 @@ v=buscarcoin(tag, Mapconcert, Mapconference,Mapexhibition,  Mapfashion, Mapother
 
 L=length(v);
 max=0;
+pos=8; %we change the position because if we don't find any coincidance we declare this picture like non-event
 
 %after we try find the maximum value of the vector and his position in the vector ( we can't use the
 % function MAX() because it breaks with our vector)
