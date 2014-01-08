@@ -29,9 +29,9 @@ info=[y{1,1},y{1,2}];
 
 % we select only the information from photographies of group 1 and we save
 % in 2 variables
-salidatags=selecciona1(info,'2');
+salidatags=selecciona1(info,'5');
 save metadatosfotos1.mat salidatags
-salidaclases=selecciona1(clases,'2');
+salidaclases=selecciona1(clases,'5');
 save clasesfotos1.mat salidaclases
 
 %%
@@ -40,10 +40,16 @@ save clasesfotos1.mat salidaclases
 load metadatosfotos1.mat
 load clasesfotos1.mat
 
+%%
+%load final.mat
+%salidatags=finali;
+%salidaclases=finalc;
+%%
 % In this part we try to extract all the tags that belongs at the same ID
  tags=separatags(salidatags);
-events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
-
+ 
+events={'concert','conference','exhibition','fashion','other','protest','theater_dance','sports','non_event'}
+%%
 % Now we try to extract all the Id that belongs at the same event
 idconcert=Idclase(salidaclases,events(1));
 idconference=Idclase(salidaclases,events(2));
@@ -52,7 +58,8 @@ idfashion=Idclase(salidaclases,events(4));
 idother=Idclase(salidaclases,events(5));
 idprotest=Idclase(salidaclases,events(6));
 idtdance=Idclase(salidaclases,events(7));
-idnoevent=Idclase(salidaclases,events(8));
+idsport=Idclase(salidaclases,events(8));
+idnoevent=Idclase(salidaclases,events(9));
 
 save tags.mat tags
 
@@ -67,13 +74,14 @@ tagsfashion= separaclases(idfashion,tags,events(4));
 tagsother= separaclases(idother,tags,events(5));
 tagsprotest= separaclases(idprotest,tags,events(6));
 tagsdance= separaclases(idtdance,tags,events(7));
-tagsnoevent= separaclases(idnoevent,tags,events(8));
+tagsport= separaclases(idsport,tags,events(8));
+tagsnoevent= separaclases(idnoevent,tags,events(9));
 %
-save tags-for-event.mat tagsconcert tagsconference tagexhibition tagsfashion tagsother tagsprotest tagsdance tagsnoevent;
+save tags-for-event.mat tagsconcert tagsconference tagexhibition tagsfashion tagsother tagsprotest tagsdance tagsport tagsnoevent;
 
 %%
 %
-clear all
+
 load tags-for-event.mat
 
 L=length(tagsconcert);
@@ -88,9 +96,13 @@ L=length(tagsother);
 tagsother=unique(tagsother(2:L));
 L=length(tagsprotest);
 tagsprotest=unique(tagsprotest(2:L));
+L=length(tagsdance);
+tagsdance=unique(tagsdance(2:L));
+L=length(tagsport);
+tagsport=unique(tagsport(2:L));
 L=length(tagsnoevent);
 tagsnoevent=unique(tagsnoevent(2:L));
-
+%%
 Mapconcert=creamaps(tagsconcert);
 Mapconference=creamaps(tagsconference);
 Mapexhibition=creamaps(tagexhibition);
@@ -98,16 +110,18 @@ Mapfashion=creamaps(tagsfashion);
 Mapother=creamaps(tagsother);
 Maprotest=creamaps(tagsprotest);
 Mapdance=creamaps(tagsdance);
+Mapsport=creamaps(tagsport);
 Mapnoevent=creamaps(tagsnoevent);
-
-vconcert=ponderacio(tagsconcert,Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
-vconference=ponderacio(tagsconference,Mapconcert, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
-vexhibition=ponderacio(tagexhibition,Mapconcert, Mapconference, Mapfashion, Mapother, Maprotest, Mapdance, Mapnoevent);
-vfashion=ponderacio(tagsfashion,Mapconcert, Mapconference, Mapexhibition, Mapother, Maprotest, Mapdance, Mapnoevent);
-vother=ponderacio(tagsother,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Maprotest, Mapdance, Mapnoevent);
-vprotest=ponderacio(tagsprotest,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Mapdance, Mapnoevent);
-vdance=ponderacio(tagsdance,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapnoevent);
-vnoevent=ponderacio(tagsnoevent,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance);
+%%
+vconcert=ponderacio(tagsconcert,Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance,Mapsport, Mapnoevent);
+vconference=ponderacio(tagsconference,Mapconcert, Mapexhibition, Mapfashion, Mapother, Maprotest, Mapdance,Mapsport, Mapnoevent);
+vexhibition=ponderacio(tagexhibition,Mapconcert, Mapconference, Mapfashion, Mapother, Maprotest, Mapdance,Mapsport, Mapnoevent);
+vfashion=ponderacio(tagsfashion,Mapconcert, Mapconference, Mapexhibition, Mapother, Maprotest, Mapdance,Mapsport, Mapnoevent);
+vother=ponderacio(tagsother,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Maprotest, Mapdance,Mapsport, Mapnoevent);
+vprotest=ponderacio(tagsprotest,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Mapdance,Mapsport, Mapnoevent);
+vdance=ponderacio(tagsdance,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest,Mapsport, Mapnoevent);
+vsport=ponderacio(tagsport,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest,Mapdance, Mapnoevent);
+vnoevent=ponderacio(tagsnoevent,Mapconcert, Mapconference, Mapexhibition, Mapfashion, Mapother, Maprotest,Mapsport, Mapdance);
 %%
 Mapconcert=containers.Map(tagsconcert,vconcert);
 Mapconference=containers.Map(tagsconference,vconference);
@@ -116,31 +130,32 @@ Mapfashion=containers.Map(tagsfashion,vfashion);
 Mapother=containers.Map(tagsother,vother);
 Maprotest=containers.Map(tagsprotest,vprotest);
 Mapdance=containers.Map(tagsdance,vdance);
+Mapsport=containers.Map(tagsport,vsport);
 Mapnoevent=containers.Map(tagsnoevent,vnoevent);
 
 
-save maps-event.mat Mapconcert Mapconference Mapexhibition Mapfashion Mapother Maprotest Mapdance Mapnoevent
+save maps-event12345.mat Mapconcert Mapconference Mapexhibition Mapfashion Mapother Maprotest Mapdance Mapsport Mapnoevent
 %%
 % we extract the ID from the tags of the photografies of the group 2
 info=[y{1,1},y{1,2}];
-salidatags=selecciona1(info,'1');
+%salidatags=selecciona2num(info,'33');
+salidatags=selecciona1(info,'6'); % PONER NUMERO FINAL DE IMAGENES A CLASIFICAR
 tags2=separatags(salidatags);
-save metadatosfotos2.mat tags2
-
-
+save metadatosfotos6.mat tags2 
 
 
 %%
+%A PARTIR DE AQUI COMIENZA EL EXAMEN!!!!!!!!!!!!!!
 %Classificadores
 %we clear all the variables for see all program more easy
 clear all
-load maps-event.mat
-load metadatosfotos2.mat
+load maps-event12345.mat %CARGAR ENTRENAMIENTO PONIENDO NUMERO FINAL MAPS-EVENT5.MAT ( X EJEMPLO)
+load metadatosfotos7.mat%CARGAR A CLASIFICAR PONIENDO NUMERO FINAL METADATOSFOTOS8.MAT ( X EJEMPLO)
 
 
 
 %%
-events={'concert','conference','exhibition','fashion','other','protest','theater_dance','non_event'}
+events={'concert','conference','exhibition','fashion','other','protest','theater_dance','sports','non_event'};
 tags3=tags2;
 Lt=length(tags3);
 k=1;
@@ -152,12 +167,11 @@ for k=1:Lt
     id=tags3(k,1);
 
  %At this point, we seek matches between image tags and events and we extract the number of matches
-v=buscarcoin(tag, Mapconcert, Mapconference,Mapexhibition,  Mapfashion, Mapother, Maprotest,Mapdance,Mapnoevent);
+v=buscarcoin(tag, Mapconcert, Mapconference,Mapexhibition,  Mapfashion, Mapother, Maprotest,Mapdance,Mapsport,Mapnoevent);
 
 L=length(v);
 max=0;
-pos=8; %we change the position because if we don't find any coincidance we declare this picture like non-event
-
+pos=8;
 %after we try find the maximum value of the vector and his position in the vector ( we can't use the
 % function MAX() because it breaks with our vector)
 for i=1:L
@@ -181,7 +195,7 @@ end
 
 
 %In this part we save the new table in a document txt
-fid = fopen('classificadors.txt','w');
+fid = fopen('classificadors.txt','w'); %Nombre del fichero clasificado.txt, dejar el mismo nombre.
 for row = 1:size(salida,1)
     fprintf(fid, repmat('%s ',1,size(salida,2)-1), salida{row,1:end-1});
     fprintf(fid, '%s\n', salida{row,end});
