@@ -14,7 +14,7 @@
 %__________________________________________________________________________________________________________________%
 
 
-function clase=relacio(pos,tags,events)
+function clase=relacion(pos,tags,events)
 switch pos
     case 1
         clase=[tags, events(1)];
@@ -32,5 +32,8 @@ switch pos
          clase=[tags, events(7)];
     case 8
          clase=[tags, events(8)];
+    case 9
+         clase=[tags, events(9)];
 end
 end
+
