@@ -183,7 +183,7 @@ end
 %In this part we save the new table in a document txt
 fid = fopen('classificadors.txt','w');
 for row = 1:size(salida,1)
-    fprintf(fid, repmat('%s\b',1,size(salida,2)-1), salida{row,1:end-1});
+    fprintf(fid, repmat('%s ',1,size(salida,2)-1), salida{row,1:end-1});
     fprintf(fid, '%s\n', salida{row,end});
 end
 fclose(fid);
