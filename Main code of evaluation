@@ -11,21 +11,21 @@
 
 %...............READING OF ANNOTATIONS FILE........... in a containers.Map
 
-fid=fopen('classes.csv');                    %reading of the model file
+fid=fopen('clases.txt');                    %reading of the model file
 DocVT= textscan(fid,'%s%s');                 %save it in a table 
-
 classes=[DocVT{1,1},DocVT{1,2}];
 
-%salida=selecciona2num(classes,'33');        %it is used to know the part of ground truth that is going to be used
-%salida=selecciona1(classes,'1');            % it depends on the part of the the images colection classified
-
-Map = containers.Map(DocVT{1,1},DocVT{1,2} );%create a container of maps
+%salida=selecciona2num(classes,'33');   %it is used to know the part of ground truth that is going to be used
+%salida=selecciona1(classes,'6');  %Poner el número final de la clasificación que queremos hacer.
+load VT.mat
+salida=vt;
+Map = containers.Map(DocVT{1,1},DocVT{1,2} ); %create a container of maps
 K=unique(salida(:,2));
 k=length(K);
 
 
 %................READING OF FILE TO ASSES......................in a matrix
-fid=fopen('22.txt');                  %reading of the classifications file
+fid=fopen('34.txt');  %Leemos txt a evaluar
 FaE= textscan(fid,'%s%s',' ');         %save it in a table 
 M_FaE=[FaE{1,1},FaE{1,2}];             %crate a matrix with the previous table
 
@@ -153,4 +153,3 @@ end
  precision=(precision1+precision2+precision3+precision4+precision5+precision6+precision7+precision8+precision9)/k
  record=(record1+record2+record3+record4+record5+record6+record7+record8+record9)/k
  Fscore =(F_score1+F_score2+F_score3+F_score4+F_score5+F_score6+F_score7+F_score8+F_score9)/k
- 
